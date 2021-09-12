@@ -13,7 +13,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -25,7 +24,12 @@ INSTALLED_APPS = [
     # Third party apps
 
     # Local apps
+    'user',
+    'blog'
 ]
+
+# User model
+AUTH_USER_MODEL = 'user.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,8 +65,12 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('POSTGRES_DB', 'site-db'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'HOST': os.getenv('POSTGRES_HOST', '127.0.0.1'),
+        'PORT': os.getenv('POSTGRES_PORT', 5432),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'admin'),
     }
 }
 
