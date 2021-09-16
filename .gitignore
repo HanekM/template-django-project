@@ -226,3 +226,5 @@ static/
 web_prod_env
 db_prod_env
 key.json
+
+media/
