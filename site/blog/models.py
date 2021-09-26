@@ -81,7 +81,7 @@ class ArticleImage(models.Model):
         verbose_name_plural = _('Article images')
 
     def __str__(self):
-        return self.url
+        return self.title
 
     @property
     def filename(self):
