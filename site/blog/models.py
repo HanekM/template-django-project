@@ -17,6 +17,13 @@ class Category(models.Model):
     def __str__(self):
         return self.category
 
+    def get_absolute_url(self):
+        try:
+            url = reverse('articles-category-list', kwargs={'slug': self.category})
+        except Exception:
+            url = '/'
+        return url
+
 
 class Article(models.Model):
     title = models.CharField(
@@ -37,7 +44,7 @@ class Article(models.Model):
     objects = models.Manager()
 
     class Meta:
-        ordering = ('-date_published', )
+        ordering = ('-id', )
         verbose_name = _('Article')
         verbose_name_plural = _('Articles')
 
@@ -47,9 +54,9 @@ class Article(models.Model):
     def get_absolute_url(self):
         try:
             url = reverse('news-detail', kwargs={
-                    'year': self.pub_date.strftime('%Y'),
-                    'month': self.pub_date.strftime('%m'),
-                    'day': self.pub_date.strftime('%d'),
+                    'year': self.date_published.strftime('%Y'),
+                    'month': self.date_published.strftime('%m'),
+                    'day': self.date_published.strftime('%d'),
                     'slug': self.slug,
                 }
             )
@@ -74,7 +81,7 @@ class ArticleImage(models.Model):
         verbose_name_plural = _('Article images')
 
     def __str__(self):
-        return self.title
+        return self.url
 
     @property
     def filename(self):
